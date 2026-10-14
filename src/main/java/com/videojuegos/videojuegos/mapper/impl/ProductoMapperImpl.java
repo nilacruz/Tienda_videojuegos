@@ -1,6 +1,7 @@
 package com.videojuegos.videojuegos.mapper.impl;
 
 import com.videojuegos.videojuegos.dto.ProductoDTO;
+import com.videojuegos.videojuegos.entity.DesarrolladorEntity;
 import com.videojuegos.videojuegos.entity.ProductoEntity;
 import com.videojuegos.videojuegos.mapper.ProductoMapper;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,11 @@ public class ProductoMapperImpl implements ProductoMapper {
 
         ProductoEntity entity = new ProductoEntity();
         entity.setIdProducto(dto.getIdProducto());
-        entity.setIdDesarrollador(dto.getIdDesarrollador());
+        if (dto.getIdDesarrollador() != null) {
+            DesarrolladorEntity dev = new DesarrolladorEntity();
+            dev.setIdDesarrollador(dto.getIdDesarrollador());
+            entity.setDesarrollador(dev);
+        }
         entity.setNombre(dto.getNombre());
         entity.setDescripcion(dto.getDescripcion());
         entity.setPrecio(dto.getPrecio());
@@ -30,7 +35,9 @@ public class ProductoMapperImpl implements ProductoMapper {
 
         ProductoDTO dto = new ProductoDTO();
         dto.setIdProducto(entity.getIdProducto());
-        dto.setIdDesarrollador(entity.getIdDesarrollador());
+        if (entity.getDesarrollador() != null) {
+            dto.setIdDesarrollador(entity.getDesarrollador().getIdDesarrollador());
+        }
         dto.setNombre(entity.getNombre());
         dto.setDescripcion(entity.getDescripcion());
         dto.setPrecio(entity.getPrecio());
